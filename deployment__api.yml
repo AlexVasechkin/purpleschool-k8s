@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  short-app-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      components: backend
+  template:
+    metadata:
+      name: short-app
+      labels:
+        components: backend
+    spec:
+      containers:
+      - name: short-app-api
+        image: antonlarichev/short-api:v1.0
+        ports:
+          - containerPort: 3000
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: api-secret
+                key: DATABASE_URL

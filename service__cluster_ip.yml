@@ -9,3 +9,15 @@ spec:
       protocol: TCP
   selector:
     components: frontend
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  short-app-api-clusterip
+spec:
+  type:  ClusterIP
+  selector:
+    acomponents: backend
+  ports:
+    - port:  3000
+      protocol: TCP
